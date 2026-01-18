@@ -1,0 +1,10 @@
+.concerns-page {
+  padding: 2rem;
+}
+
+.concerns-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: flex-start;
+}

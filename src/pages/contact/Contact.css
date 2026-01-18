@@ -1,0 +1,77 @@
+/* Contact Page Styles */
+.contact-form-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.contact-form-group {
+  margin-bottom: 20px;
+}
+
+.contact-form-label {
+  display: block;
+  font-weight: 500;
+  color: #1a472a;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.contact-form-input,
+.contact-form-textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d6e8d6;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  transition: all 0.3s ease;
+}
+
+.contact-form-input:focus,
+.contact-form-textarea:focus {
+  outline: none;
+  border-color: #1a472a;
+  ring: 2px;
+  ring-color: #1a472a;
+  box-shadow: 0 0 0 3px rgba(26, 71, 42, 0.1);
+}
+
+.contact-form-textarea {
+  resize: vertical;
+  min-height: 150px;
+}
+
+.contact-form-error {
+  color: #ef4444;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.contact-submit-btn {
+  background-color: #1a472a;
+  color: #fffcef;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.contact-submit-btn:hover:not(:disabled) {
+  background-color: #14532d;
+}
+
+.contact-submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .contact-form-input,
+  .contact-form-textarea {
+    font-size: 16px; /* Prevents zoom on mobile */
+  }
+}
