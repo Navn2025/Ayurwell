@@ -13,27 +13,30 @@ const App=() =>
   const dispatch=useDispatch()
   const navigate=useNavigate()
   const location=useLocation()
-  const {user}=useSelector((state) => state.auth)
+  const {user, loading}=useSelector((state) => state.auth)
 
   useEffect(() =>
   {
-    dispatch(fetchCurrentUser()).then((result) =>
-    {
-      if (result.payload?.user)
+    // Only fetch if user is not already loaded and not currently loading
+    if (!user && !loading) {
+      dispatch(fetchCurrentUser()).then((result) =>
       {
-        dispatch(fetchCart())
-        // Check if profile is incomplete and user is not on complete-profile or logout routes
-        if (!result.payload.user.isProfileComplete&&
-          !location.pathname.includes('/complete-profile')&&
-          !location.pathname.includes('/login')&&
-          !location.pathname.includes('/register')&&
-          location.pathname!=='/logout')
+        if (result.payload?.user)
         {
-          navigate('/complete-profile', {state: {from: location}})
+          dispatch(fetchCart())
+          // Check if profile is incomplete and user is not on complete-profile or logout routes
+          if (!result.payload.user.isProfileComplete&&
+            !location.pathname.includes('/complete-profile')&&
+            !location.pathname.includes('/login')&&
+            !location.pathname.includes('/register')&&
+            location.pathname!=='/logout')
+          {
+            navigate('/complete-profile', {state: {from: location}})
+          }
         }
-      }
-    })
-  }, [dispatch, location.pathname, navigate])
+      })
+    }
+  }, [dispatch, user, loading]) // Add user and loading to dependencies
 
   // Scroll to top on route change
   useEffect(() =>
