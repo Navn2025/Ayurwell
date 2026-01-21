@@ -80,13 +80,6 @@ const Home=() =>
             }
         }
 
-        // Only fetch if concerns are not already loaded and not currently loading
-        if (!concerns.length && loadingConcerns) {
-            fetchConcerns()
-        } else if (concerns.length) {
-            setLoadingConcerns(false)
-        }
-
         const fetchCategories=async () =>
         {
             try
@@ -173,10 +166,10 @@ const Home=() =>
         }
 
         fetchConcerns()
-        if (!categories.length && loadingCategories) fetchCategories()
-        if (!trendingProducts.length && loadingTrending) fetchTrendingProducts()
-        if (!bestSellingProducts.length && loadingBestSelling) fetchBestSellingProducts()
-        if (!pujanSamagriProducts.length && loadingPujanSamagri) fetchPujanSamagriProducts()
+        fetchCategories()
+        fetchTrendingProducts()
+        fetchBestSellingProducts()
+        fetchPujanSamagriProducts()
     }, [])
 
     const handleConcernClick=(concern) =>

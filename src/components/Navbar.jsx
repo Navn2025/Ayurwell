@@ -32,10 +32,8 @@ const Navbar=() =>
     // Fetch categories on mount
     useEffect(() =>
     {
-        if (!categories?.length) {
-            dispatch(fetchAllCategories());
-        }
-    }, [dispatch, categories?.length]);
+        dispatch(fetchAllCategories());
+    }, [dispatch]);
 
     // Fetch search suggestions
     useEffect(() =>
@@ -396,21 +394,21 @@ const Navbar=() =>
                                             <div className="dropdown-item disabled">No categories available</div>
                                         )}
                                         <div className="dropdown-divider"></div>
-<Link
-                                                    to="/products"
-                                                    className="dropdown-item view-all text-[#fffcef]"
-                                                    onClick={closeMobileMenu}
-                                                >
-                                                    View All Products
-                                                </Link>
-                                                <div className="dropdown-divider"></div>
-                                                <Link
-                                                    to="/?scroll=categories"
-                                                    className="dropdown-item text-[#fffcef]"
-                                                    onClick={closeMobileMenu}
-                                                >
-                                                    View All Categories
-                                                </Link>
+                                        <Link
+                                            to="/products"
+                                            className="dropdown-item view-all text-[#fffcef]"
+                                            onClick={closeMobileMenu}
+                                        >
+                                            View All Products
+                                        </Link>
+                                        <div className="dropdown-divider"></div>
+                                        <Link
+                                            to="/?scroll=categories"
+                                            className="dropdown-item text-[#fffcef]"
+                                            onClick={closeMobileMenu}
+                                        >
+                                            View All Categories
+                                        </Link>
                                     </div>
                                 )}
                             </li>

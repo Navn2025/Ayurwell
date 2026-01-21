@@ -41,6 +41,12 @@ const ProductDetail=() =>
                 if (data.id)
                 {
                     dispatch(getProductReviews(data.id))
+
+                    // Fetch user's review if logged in
+                    if (user)
+                    {
+                        dispatch(getUserReviewForProduct(data.id))
+                    }
                 }
             } catch (err)
             {
@@ -56,7 +62,7 @@ const ProductDetail=() =>
         {
             fetchProduct()
         }
-    }, [slug, dispatch])
+    }, [slug, dispatch, user])
 
     // Detect mobile view
     useEffect(() =>
@@ -70,15 +76,6 @@ const ProductDetail=() =>
         window.addEventListener('resize', checkMobile)
         return () => window.removeEventListener('resize', checkMobile)
     }, [])
-
-    // Fetch user's review separately when product and user are available
-    useEffect(() =>
-    {
-        if (product?.id && user)
-        {
-            dispatch(getUserReviewForProduct(product.id))
-        }
-    }, [product?.id, user, dispatch])
 
     const handleAddToCart=async () =>
     {

@@ -13,30 +13,27 @@ const App=() =>
   const dispatch=useDispatch()
   const navigate=useNavigate()
   const location=useLocation()
-  const {user, loading}=useSelector((state) => state.auth)
+  const {user}=useSelector((state) => state.auth)
 
   useEffect(() =>
   {
-    // Only fetch if user is not already loaded and not currently loading
-    if (!user && !loading) {
-      dispatch(fetchCurrentUser()).then((result) =>
+    dispatch(fetchCurrentUser()).then((result) =>
+    {
+      if (result.payload?.user)
       {
-        if (result.payload?.user)
+        dispatch(fetchCart())
+        // Check if profile is incomplete and user is not on complete-profile or logout routes
+        if (!result.payload.user.isProfileComplete&&
+          !location.pathname.includes('/complete-profile')&&
+          !location.pathname.includes('/login')&&
+          !location.pathname.includes('/register')&&
+          location.pathname!=='/logout')
         {
-          dispatch(fetchCart())
-          // Check if profile is incomplete and user is not on complete-profile or logout routes
-          if (!result.payload.user.isProfileComplete&&
-            !location.pathname.includes('/complete-profile')&&
-            !location.pathname.includes('/login')&&
-            !location.pathname.includes('/register')&&
-            location.pathname!=='/logout')
-          {
-            navigate('/complete-profile', {state: {from: location}})
-          }
+          navigate('/complete-profile', {state: {from: location}})
         }
-      })
-    }
-  }, [dispatch, user, loading]) // Add user and loading to dependencies
+      }
+    })
+  }, [dispatch])
 
   // Scroll to top on route change
   useEffect(() =>
@@ -45,7 +42,7 @@ const App=() =>
   }, [location.pathname])
 
   // Routes that should show footer
-  const footerRoutes = [
+  const footerRoutes=[
     '/',
     '/products',
     '/contact',
@@ -58,31 +55,34 @@ const App=() =>
   ];
 
   // Check if current route should show footer
-  const shouldShowFooter = footerRoutes.some(route => {
-    if (route.includes(':')) {
+  const shouldShowFooter=footerRoutes.some(route =>
+  {
+    if (route.includes(':'))
+    {
       // Handle dynamic routes
-      const routeParts = route.split('/');
-      const pathParts = location.pathname.split('/');
-      
-      if (routeParts.length !== pathParts.length) return false;
-      
-      return routeParts.every((part, index) => {
+      const routeParts=route.split('/');
+      const pathParts=location.pathname.split('/');
+
+      if (routeParts.length!==pathParts.length) return false;
+
+      return routeParts.every((part, index) =>
+      {
         if (part.startsWith(':')) return true;
-        return part === pathParts[index];
+        return part===pathParts[index];
       });
     }
-    return route === location.pathname;
+    return route===location.pathname;
   });
 
   return (
     <div className="app-root font-exo bg-[#fffcef] min-h-screen flex flex-col">
       {/* Hide navbar specifically for admin routes */}
-      {location.pathname.startsWith('/admin') ? null : <Navbar />}
+      {location.pathname.startsWith('/admin')? null:<Navbar />}
       <main className="flex-grow">
         <MainRoutes />
       </main>
       {/* Show footer only on specific routes */}
-      {shouldShowFooter && !location.pathname.startsWith('/admin') ? <Footer /> : null}
+      {shouldShowFooter&&!location.pathname.startsWith('/admin')? <Footer />:null}
     </div>
   )
 }
