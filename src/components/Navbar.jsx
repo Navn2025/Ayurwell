@@ -32,8 +32,10 @@ const Navbar=() =>
     // Fetch categories on mount
     useEffect(() =>
     {
-        dispatch(fetchAllCategories());
-    }, [dispatch]);
+        if (!categories?.length) {
+            dispatch(fetchAllCategories());
+        }
+    }, [dispatch, categories?.length]);
 
     // Fetch search suggestions
     useEffect(() =>

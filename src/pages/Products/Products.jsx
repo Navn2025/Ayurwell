@@ -336,7 +336,7 @@ const Products=() =>
         {
             dispatch(fetchAllCategories())
         }
-    }, [dispatch, products?.length, categories?.length])
+    }, [dispatch])
 
     // Debounced search effect
     useEffect(() =>

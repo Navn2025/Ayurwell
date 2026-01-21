@@ -33,7 +33,7 @@ const App=() =>
         }
       }
     })
-  }, [dispatch])
+  }, [dispatch, location.pathname, navigate])
 
   // Scroll to top on route change
   useEffect(() =>
