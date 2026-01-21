@@ -76,7 +76,6 @@ const Navbar=() =>
     {
         const handleInteraction=(event) =>
         {
-            const isClickOutside=event.type==="mousedown"||event.type==="touchstart";
             const isEscapeKey=event.type==="keydown"&&event.key==="Escape";
 
             if (categoryDropdownRef.current&&!categoryDropdownRef.current.contains(event.target))

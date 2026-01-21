@@ -61,6 +61,9 @@ export const fetchCurrentUser=createAsyncThunk(
     "auth/fetchCurrentUser",
     async (_, {rejectWithValue}) =>
     {
+        // Prevent multiple simultaneous calls
+
+
         try
         {
             const response=await getCurrentUser();
@@ -150,7 +153,7 @@ export const resetUserPassword=createAsyncThunk(
 
 const authSlice=createSlice({
     name: "auth",
-initialState: {
+    initialState: {
         user: null,
         isAuthenticated: false,
         loading: true, // Start as true to wait for auth check
@@ -158,7 +161,7 @@ initialState: {
         message: null,
     },
     reducers: {
-clearError: (state) =>
+        clearError: (state) =>
         {
             state.error=null;
             state.message=null;
@@ -266,7 +269,7 @@ clearError: (state) =>
             {
                 state.loading=true;
             })
-.addCase(forgotUserPassword.fulfilled, (state, action) =>
+            .addCase(forgotUserPassword.fulfilled, (state, action) =>
             {
                 state.loading=false;
                 state.message=action.payload?.message||"Password reset link sent successfully";
@@ -280,7 +283,7 @@ clearError: (state) =>
             {
                 state.loading=true;
             })
-.addCase(resetUserPassword.fulfilled, (state, action) =>
+            .addCase(resetUserPassword.fulfilled, (state, action) =>
             {
                 state.loading=false;
                 state.message=action.payload?.message||"Password reset successfully";
